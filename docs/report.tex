@@ -1,0 +1,61 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+\titlespacing*{\subsection}{0pt}{6pt}{2pt}
+
+\title{\vspace{-1.5cm}Bulk Mailing Tool \\ \large A Mail-Scheduling System for GYWS, IIT Kharagpur}
+\author{Megha Singh}
+\date{August 2025}
+
+\begin{document}
+\maketitle
+\vspace{-0.8cm}
+
+\section*{Objective}
+GYWS is a student-run NGO at IIT Kharagpur that runs donor outreach and awareness campaigns over email.
+Sending these campaigns manually from a single inbox is slow and trips spam filters, since providers flag
+bursts of near-identical messages from one sender. The Bulk Mailing Tool was built to let a small team
+schedule and send large recipient lists in a controlled, trackable way, reducing manual effort and
+spam-filter risk.
+
+\section*{What was built}
+The system is split into two services:
+
+\begin{itemize}[nosep]
+  \item \textbf{Frontend} — a React (Vite) dashboard, styled with Tailwind CSS, for composing campaigns
+  with a rich-text editor, uploading CSV recipient lists, managing sender ``agents,'' and reviewing send
+  history.
+  \item \textbf{Backend} — a FastAPI service backed by MongoDB. It exposes JWT-authenticated endpoints to
+  create sender agents, send an email immediately, or schedule a single email or a full batch for future
+  delivery. Scheduled jobs are handled by APScheduler and dispatched through \texttt{smtplib} over SMTP.
+  Each recipient's message supports placeholder substitution (e.g.\ \texttt{\{\{name\}\}}) so a single
+  template can be personalized per recipient, and every send is logged with its delivery status.
+\end{itemize}
+
+\section*{Scope note}
+This write-up accompanies a CV entry that also references a Redis/Bull-based queue for per-user rate
+limiting and a Mistral-AI-generated content-variation step to reduce duplicate-content spam flags. Those
+pieces were part of the intended design and were evaluated during development; the codebase in this
+repository reflects the FastAPI + APScheduler implementation that was actually shipped and used to send
+GYWS's campaigns. The rate-limiting and content-variation ideas remain a natural next iteration on top of
+the current scheduler.
+
+\section*{Outcome}
+The tool was used to send donor and outreach campaigns for GYWS, supporting multiple scheduled batches
+with per-recipient personalization and delivery tracking, in support of the organization's fundraising
+and awareness efforts during 2025.
+
+\section*{Repositories}
+\begin{itemize}[nosep]
+  \item Frontend: \url{https://github.com/GYWS-TechOps/mailkaro-frontend}
+  \item Backend: \url{https://github.com/GYWS-TechOps/mailkaro-backend}
+  \item Consolidated repository: \url{https://github.com/MeghaSinghall/bulk-mailing-tool}
+\end{itemize}
+
+\end{document}

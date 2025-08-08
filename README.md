@@ -46,11 +46,6 @@ npm run dev
 
 See [`docs/`](./docs) for a one-page write-up of the project (background, architecture, and outcomes).
 
-## Origin
+## Repository
 
-This project was originally developed across two repositories under the GYWS TechOps organization:
-
-- https://github.com/GYWS-TechOps/mailkaro-frontend
-- https://github.com/GYWS-TechOps/mailkaro-backend
-
-They have been consolidated here for portfolio purposes.
+https://github.com/MeghaSinghall/bulk-mailing-tool
